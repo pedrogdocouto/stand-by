@@ -1,0 +1,108 @@
+@{
+    ViewData["Titulo"] = "Registro de cliente";
+    const string feedback = "Favor preencher o campo";
+}
+
+<div class="container my-4">
+    <div class="row align-items-center pagina">
+        <div class="col col-12 mx-auto align-self-start">
+            <p class="h5 text-center mb-4">Dados da empresa</p>
+        </div>
+        <div class="col col-12">
+            <form asp-action="" asp-antiforgery="true" method="post"
+                  id="formulario-cadastro" class="was-validated" novalidate data-ajax="true"
+                  data-ajax-method="POST" data-ajax-complete="ValidarCadastro">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col col-10 col-md-3">
+                        <label for="cnpj" class="mb-1">CNPJ</label>
+                        <input id="cnpj" type="text" name="Cnpj" class="form-control cnpj"
+                               minlength="18" placeholder="Informe o CNPJ do cliente" required
+                               onkeyup="ValidarPreenchimento($('#submit-cliente'))" />
+                        <div id="feedback-cnpj" class="invalid-feedback">Informe um CNPJ válido</div>
+                    </div>
+                    <div class="form-group col col-10 col-md-3">
+                        <label for="razao-social" class="mb-1">Razão social</label>
+                        <input id="razao-social" type="text" name="RazaoSocial" class="form-control"
+                               placeholder="Informe a razão social do cliente" minlength="5" maxlength="50" required
+                               onkeyup="ValidarPreenchimento($('#submit-cliente'))" />
+                        <div class="invalid-feedback">@feedback</div>
+                    </div>
+                    <div class="form-group col col-10 col-md-2">
+                        <label for="status" class="mb-1">Status</label>
+                        <select id="status" name="Status" class="selectpicker show-tick"
+                                data-width="100%" data-container="body" data-style="text-capitalize" required
+                                data-title="Selecionar Status" onchange="ValidarPreenchimento($('#submit-cliente'))">
+                            <option value="1" class="text-capitalize">
+                                Status exemplo
+                            </option>
+                            
+                            @* @foreach (var (chave, valor) in Global.ListarSituacao(3, 4)) *@
+                            @* { *@
+                            @*     <option value="@chave"> *@
+                            @*         @valor *@
+                            @*     </option> *@
+                            @* } *@
+                                                            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center mb-4">
+                    <div class="form-group col col-10 col-md-2">
+                        <label for="capital" class="mb-1">Capital</label>
+                        <input id="capital" type="text" name="Capital" class="form-control moeda"
+                               placeholder="00.000,00" required
+                               onkeyup="ValidarPreenchimento($('#submit-cliente'))" />
+                        <div class="invalid-feedback">@feedback</div>
+                    </div>
+                    <div class="form-group col col-10 col-md-2">
+                        <label for="quarentena" class="mb-1">Quarentena</label>
+                        <select id="quarentena" name="Quarentena" class="selectpicker show-tick"
+                                data-width="100%" data-container="body" data-style="text-capitalize" required
+                                data-title="Selecionar Opção" onchange="ValidarPreenchimento($('#submit-cliente'))">
+                            <option value="0" class="text-capitalize">
+                                Não
+                            </option>
+                            <option value="1" class="text-capitalize">
+                                Sim
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col col-10 col-md-2">
+                        <label for="classificacao" class="mb-1">Classificação</label>
+                        <select id="classificacao" name="Classificacao" class="selectpicker show-tick"
+                                data-width="100%" data-container="body" data-style="text-capitalize" required
+                                data-title="Selecionar Opção" onchange="ValidarPreenchimento($('#submit-cliente'))">
+                            <option value="1" class="text-capitalize">
+                                Classificação exemplo
+                            </option>                
+                        </select>
+                    </div>
+                    <div class="form-group col col-10 col-md-2">
+                        <label for="fundacao" class="mb-1">Data de fundação</label>
+                        <input id="fundacao" name="DataTemporaria" type="text" class="form-control date data"
+                               placeholder="00/00/0000" minlength="10" required
+                               onchange="ValidarPreenchimento($('#submit-cliente'))" />
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="form-group col col-10 col-md-4">
+                        <button id="submit-cliente" class="btn btn-success btn-block" type="submit">
+                            Finalizar registro
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="row justify-content-center">
+                <div class="col col-10 col-md-4 mx-auto align-self-end">
+                    @* <a class="btn btn-danger btn-block" href="@Url.Action("Lista", "Empresa")"> *@
+                    @*     Retornar *@
+                    @* </a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/Cliente/cliente.js" type="text/javascript"></script>
+<script src="~/js/Cliente/cadastro.js" type="text/javascript"></script>

@@ -8,12 +8,12 @@ namespace StandBy.Data
         public StandBy(DbContextOptions<StandBy> options) : base(options)
         {
         }
-        
+
+        public DbSet<Cliente> Clientes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Cliente>().HasIndex(u => u.Cnpj).IsUnique();
         }
-        
-        public DbSet<Cliente> Clientes { get; set; }
     }
 }

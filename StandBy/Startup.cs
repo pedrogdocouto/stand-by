@@ -14,12 +14,12 @@ namespace StandBy
         }
 
         private IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,7 +37,7 @@ namespace StandBy
             app.UseRouting();
 
             app.UseAuthorization();
-            
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = context =>
@@ -47,7 +47,7 @@ namespace StandBy
             });
 
             app.UseEndpoints(endpoints =>
-            { 
+            {
                 endpoints.MapControllerRoute("default",
                     "{controller=Principal}/{action=Inicio}/{parametro?}");
             });

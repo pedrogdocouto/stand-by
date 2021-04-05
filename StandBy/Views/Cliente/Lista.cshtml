@@ -1,6 +1,115 @@
 @{
-    ViewData["Title"] = "Lista de clientes";
+    ViewData["Titulo"] = "Lista de clientes";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col col-12">
+            <p class="h5 text-center">@ViewData["Titulo"]</p>
+        </div>
+    </div>
+    <div class="row justify-content-between mb-3 mb-md-0">
+        <div class="col col-5 col-sm-4 col-md-3 col-lg-2">
+            <a class="text-info" href="#">
+                <small>Filtrar lista</small>
+            </a>
+        </div>
+        <div class="col col-7 col-sm-4 col-md-3 col-lg-2">
+            <a href="@Url.Action("Cadastro")" class="btn btn-success btn-block" target="_blank">
+                Novo registro
+            </a>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col col-12">
+            <div class="cep d-none"></div>
+            <table id="tabela-cliente" class="table table-hover table-bordered w-100">
+                <thead class="text-center bg-info text-light">
+                <tr>
+                    <th>CNPJ</th>
+                    <th>Razão social</th>
+                    <th>Fundação</th>
+                    <th>Capital</th>
+                    <th>Classificação</th>
+                    <th>Quarentena</th>
+                    <th>Status</th>
+                    @* <th>Ações</th> *@
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="align-middle cnpj">12345678901234</td>
+                    <td class="align-middle text-capitalize" style="width: 35%;">exemplo de razão social</td>
+                    <td class="align-middle data">05052000</td>
+                    <td class="align-middle moeda">10000</td>
+                    <td class="align-middle">A</td>
+                    <td class="align-middle">NÃO</td>
+                    <td class="align-middle">ATIVA</td>
+                    @* <td style="width:5%;"> *@
+                    @*     <div class="btn-group btn-block" role="group" aria-label="Grupo de ações para acompanhamento"> *@
+                    @*         <a href="@Url.Action("Detalhamento", "Empresa", new {idEmpresa = empresa.IdEmpresa})" *@
+                    @*            class="btn btn-sm btn-outline-info" role="button" *@
+                    @*            data-ajax="true" data-ajax-method="POST" data-ajax-complete="Detalhamento"> *@
+                    @*             <i class="fas fa-info-circle"></i> *@
+                    @*         </a> *@
+                    @*         <a class="btn btn-sm btn-outline-info" role="button" target="_blank" *@
+                    @*            href="@Url.Action("Lista", "Observacao", new {entidade = 4, objeto = empresa.IdEmpresa})"> *@
+                    @*             <i class="fas fa-comment"></i> *@
+                    @*         </a> *@
+                    @*     </div> *@
+                    @* *@
+                    @*     @if (Validacao.ValidarPerfil(new List<byte> {1, 2, 5}) && Validacao.ValidarPermissao()) *@
+                    @*     { *@
+                    @*         <div class="btn-group btn-block" role="group" aria-label="Grupo de ações para gerenciamento"> *@
+                    @*             <a href="@Url.Action("Gerenciamento", "Empresa", new {idEmpresa = empresa.IdEmpresa})" *@
+                    @*                class="btn btn-sm btn-outline-danger" role="button" target="_blank"> *@
+                    @*                 <i class="fas fa-pen"></i> *@
+                    @*             </a> *@
+                    @*             <a href="#" class="btn btn-sm btn-outline-danger" *@
+                    @*                data-toggle="modal" data-target="#modal-inativacao" role="button" *@
+                    @*                onclick="ValidarInativacao('@empresa.IdEmpresa', '@empresa.NomeFantasia.ToLower()')"> *@
+                    @*                 <i class="fas fa-times"></i> *@
+                    @*             </a> *@
+                    @*         </div> *@
+                    @*     } *@
+                    @* *@
+                    @* </td> *@
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modal-inativacao" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atenção</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmacao"></p>
+            </div>
+            <form asp-action="" asp-antiforgery="true" method="post"
+                  id="formulario-inativacao" data-ajax="true" data-ajax-method="POST"
+                  data-ajax-complete="FinalizarInativacao">
+                <input type="hidden" id="id-empresa" name="idEmpresa"/>
+                <div class="modal-footer">
+                    <button id="cancela-inativacao" type="button" class="btn btn-success" data-dismiss="modal">
+                        Voltar
+                    </button>
+                    <button id="submit-inativacao" type="submit" class="btn btn-danger">
+                        Excluir
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/Cliente/cliente.js" type="text/javascript"></script>
+<script src="~/js/Cliente/lista.js" type="text/javascript"></script>
